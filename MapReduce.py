@@ -1,5 +1,6 @@
 import json
 
+
 class MapReduce:
     def __init__(self):
         # initialize dictionary for intermediate values from Map task
@@ -15,14 +16,14 @@ class MapReduce:
 
     def emit(self, value):
         # append value to list of results
-        self.result.append(value) 
+        self.result.append(value)
 
     def execute(self, data, mapper, reducer):
         # read each line from input file; call Map function on each record
         for line in data:
             record = json.loads(line)
             mapper(record)
-        
+
         # for each key:valuelist in intermediate dictionary, call Reduce task
         for key in self.intermediate:
             reducer(key, self.intermediate[key])
