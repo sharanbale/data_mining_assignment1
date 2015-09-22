@@ -12,18 +12,20 @@ def mapper(record):
     # value: document contents
     wc={}
     filename=record[0]
-    txt = open(filename,'r',errors='ignore')
-    for line in txt:
-        listw = line.split(' ')
-        for word in listw:
-            if word in wc:
-                wc[word]=wc[word]+1
-            else:
-                wc[word]=1
+    filec=record[1]
+    listw = filec.split(' ')
+    for word in listw:
+	word2=word.lower()
+	if re.match('^\w+$',word2):
+		if word2 in wc:
+			wc[word2]=wc[word2]+1
+		else:
+			wc[word2]=1
 
     for word in wc:
         val=[]
-        val.append(filename,wc[word])
+        val.append(filename)
+	val.append(wc[word])
         mr.emit_intermediate(word,val)
 '''
     key = record[0]
@@ -36,13 +38,13 @@ def reducer(key, list_of_values):
     # key: word
     # value: list of occurrence counts
     df=len(list_of_values)
-    mr.emit(())
-
+    mr.emit((key,df,list_of_values))
+'''
     total = 0
     for v in list_of_values:
       total += v
     mr.emit((key, total))
-
+'''
 # Do not modify below this line
 # =============================
 if __name__ == '__main__':
