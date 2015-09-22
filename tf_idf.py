@@ -30,15 +30,6 @@ def mapper(record):
         mr.emit_intermediate(word, val)
 
 
-'''
-    key = record[0]
-    value = record[1]
-    words = value.split()
-    for w in words:
-      mr.emit_intermediate(w, 1)
-'''
-
-
 def reducer(key, list_of_values):
     # key: word
     # value: list of occurrence counts
@@ -46,12 +37,6 @@ def reducer(key, list_of_values):
     mr.emit((key, df, list_of_values))
 
 
-'''
-    total = 0
-    for v in list_of_values:
-      total += v
-    mr.emit((key, total))
-'''
 # Do not modify below this line
 # =============================
 if __name__ == '__main__':
